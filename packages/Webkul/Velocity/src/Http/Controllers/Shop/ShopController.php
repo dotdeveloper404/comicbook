@@ -16,8 +16,9 @@ class ShopController extends Controller
      */
     public function search()
     {
+        
         $results = $this->velocityProductRepository->searchProductsFromCategory(request()->all());
-
+        
         return view($this->_config['view'])->with('results', $results ? $results : null);
     }
 
@@ -61,6 +62,7 @@ class ShopController extends Controller
         switch ($slug) {
             case 'new-products':
             case 'featured-products':
+            case 'all-products':
                 $formattedProducts = [];
                 $count = request()->get('count');
 
@@ -68,6 +70,8 @@ class ShopController extends Controller
                     $products = $this->velocityProductRepository->getNewProducts($count);
                 } else if ($slug == "featured-products") {
                     $products = $this->velocityProductRepository->getFeaturedProducts($count);
+                } else if ($slug == "all-products") {
+                    $products = $this->velocityProductRepository->getAllProducts($count);
                 }
 
                 foreach ($products as $product) {

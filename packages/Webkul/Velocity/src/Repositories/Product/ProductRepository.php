@@ -96,6 +96,26 @@ class ProductRepository extends Repository
         return $results;
     }
 
+    public function getAllProducts($count)
+    {
+        $results = app(ProductFlatRepository::class)->scopeQuery(function($query) {
+            $channel = request()->get('channel') ?: (core()->getCurrentChannelCode() ?: core()->getDefaultChannelCode());
+
+            $locale = request()->get('locale') ?: app()->getLocale();
+
+            return $query->distinct()
+                         ->addSelect('product_flat.*')
+                         ->where('product_flat.status', 1)
+                         ->where('product_flat.visible_individually', 1)
+                         ->where('product_flat.channel', $channel)
+                         ->where('product_flat.locale', $locale)
+                         ->orderBy('product_id', 'desc');
+        })->paginate($count);
+
+        return $results;
+    }
+
+
 
     /**
      * Search Product by Attribute
