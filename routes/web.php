@@ -10,3 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+Route::get('artisan', function () {
+    return Artisan::call('storage:link');
+});

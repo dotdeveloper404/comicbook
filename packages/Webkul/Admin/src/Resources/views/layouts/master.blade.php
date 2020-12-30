@@ -152,5 +152,12 @@
         {!! view_render_event('bagisto.admin.layout.body.after') !!}
 
         <div class="modal-overlay"></div>
+
+
+        <script>
+            $(document).ready(function(){
+                $('.navbar-left ul.menubar li.menu-item span.icon.catalog-icon + span').text('Product Catalog');
+            });
+        </script>
     </body>
 </html>
